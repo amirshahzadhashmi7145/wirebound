@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "test": "node scripts/verify_ui.js",
-    "test:unit": "node ./node_modules/vitest/vitest.mjs --run"
+    "test:unit": "node ./node_modules/vitest/vitest.mjs --run --pool=threads --maxWorkers=1"
   },
   "devDependencies": {
     "vitest": "^3.0.0"
