@@ -2,6 +2,10 @@
   "name": "atelier-frontend",
   "private": true,
   "scripts": {
-    "test": "node scripts/verify_ui.js"
+    "test": "node scripts/verify_ui.js",
+    "test:unit": "vitest --run"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
   }
 }
