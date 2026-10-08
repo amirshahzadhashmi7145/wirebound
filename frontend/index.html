@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Wirebound</title>
+  </head>
+  <body>
+    <div id="hud" aria-live="polite"></div>
+    <canvas id="board" width="640" height="640"></canvas>
+    <script type="module">
+      import { renderEndlessHud } from "./src/hud.mjs";
+      renderEndlessHud(document.getElementById("hud"), {
+        currentLevel: 1,
+        puzzlesSolved: 0,
+        totalPuzzles: 36,
+      });
+    </script>
+  </body>
+</html>
