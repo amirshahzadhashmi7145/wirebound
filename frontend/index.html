@@ -6,6 +6,7 @@
   </head>
   <body>
     <div id="hud" aria-live="polite"></div>
+    <div id="settings-overlay" hidden></div>
     <canvas id="board" width="640" height="640"></canvas>
     <script type="module">
       import { renderEndlessHud } from "./src/hud.mjs";
@@ -14,6 +15,9 @@
         puzzlesSolved: 0,
         totalPuzzles: 36,
       });
-    </script>
+    
+          import { renderMaxHintsInSettings } from "./src/settings.mjs";
+          renderMaxHintsInSettings(document.getElementById("settings-overlay"), 9);
+        </script>
   </body>
 </html>
