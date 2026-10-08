@@ -1,6 +1,30 @@
-/** Settings overlay helpers (plain DOM — leave hud.mjs alone). */
+export function createVolumeControl() {
+    const volumeControl = document.createElement('input');
+    volumeControl.type = 'range';
+    volumeControl.min = '0';
+    volumeControl.max = '1';
+    volumeControl.step = '0.01';
+    volumeControl.value = '0.5'; // Default volume
 
-/** Mirror of backend/hints.py: caps at 3 for grids larger than 8x8. */
+    volumeControl.addEventListener('input', (event) => {
+        const volume = event.target.value;
+        adjustSoundEffectsVolume(volume);
+    });
+
+    return volumeControl;
+}
+
+function adjustSoundEffectsVolume(volume) {
+    // Assuming there's a global audio context and master gain node
+    if (window.audioContext && window.masterGainNode) {
+        window.masterGainNode.gain.setValueAtTime(volume, window.audioContext.currentTime);
+    }
+}
+
+export function formatMaxHintsLabel(gridSize) {
+  return `Maximum hints: ${maximumHintsForGrid(gridSize)}`;
+}
+
 export function maximumHintsForGrid(gridSize) {
   const size = Number(gridSize);
   if (!Number.isFinite(size) || size < 1) return 0;
@@ -8,14 +32,6 @@ export function maximumHintsForGrid(gridSize) {
   return Math.floor(size / 2);
 }
 
-export function formatMaxHintsLabel(gridSize) {
-  return `Maximum hints: ${maximumHintsForGrid(gridSize)}`;
-}
-
-/**
- * Ensure the settings overlay shows the max-hints line.
- * `overlay` is a DOM element or a test double with querySelector/appendChild.
- */
 export function renderMaxHintsInSettings(overlay, gridSize) {
   if (!overlay) throw new Error("settings overlay is required");
   let line = overlay.querySelector?.("[data-max-hints]") ?? null;
