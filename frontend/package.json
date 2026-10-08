@@ -1,11 +1,17 @@
 {
-  "name": "atelier-frontend",
-  "private": true,
+  "name": "my-app",
+  "version": "1.0.0",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
     "test": "node scripts/verify_ui.js",
     "test:unit": "node ./node_modules/vitest/vitest.mjs --run --pool=threads --maxWorkers=1"
   },
   "devDependencies": {
+    "typescript": "^4.5.0",
+    "vite": "^2.6.0",
     "vitest": "^3.0.0"
-  }
+  },
+  "dependencies": {}
 }
