@@ -1,39 +1,21 @@
-let isPaused = false;
-
-export function togglePauseMenu() {
-    isPaused = !isPaused;
-    const pauseMenu = document.getElementById('pauseMenu');
-    if (isPaused) {
-        pauseMenu.style.display = 'block';
-        // Pause animations and sounds here
-    } else {
-        pauseMenu.style.display = 'none';
-        // Resume animations and sounds here
-    }
-}
-
-export function setupPauseMenu() {
-    const pauseMenu = document.createElement('div');
-    pauseMenu.id = 'pauseMenu';
-    pauseMenu.style.display = 'none';
-    pauseMenu.innerHTML = `
-        <h1>Paused</h1>
-        <button id='resume'>Resume</button>
-        <button id='restart'>Restart</button>
-        <button id='settings'>Settings</button>
-    `;
-    document.body.appendChild(pauseMenu);
-
-    document.getElementById('resume').onclick = togglePauseMenu;
-    document.getElementById('restart').onclick = () => { /* Restart logic */ togglePauseMenu(); };
-    document.getElementById('settings').onclick = () => { /* Open settings logic */ togglePauseMenu(); };
-
-    window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            togglePauseMenu();
+// Request animation frame for smooth animations
+function startAnimation() {
+    let lastTime = 0;
+    function animate(time) {
+        const deltaTime = time - lastTime;
+        if (deltaTime < 16.67) {
+            requestAnimationFrame(animate);
+            return;
         }
-    });
+        lastTime = time;
+        // Your animation logic here
+        // ...
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
 }
+
+startAnimation();
 
 export function formatLevel(currentLevel) {
   return `Current Level: ${currentLevel}`;
@@ -71,4 +53,39 @@ export function renderEndlessHud(element, { currentLevel, puzzlesSolved, totalPu
   element.dataset.mode = "endless";
   element.textContent = `${formatLevel(currentLevel)} · ${formatProgress(puzzlesSolved, totalPuzzles)}`;
   return element.textContent;
+}
+
+export function setupPauseMenu() {
+    const pauseMenu = document.createElement('div');
+    pauseMenu.id = 'pauseMenu';
+    pauseMenu.style.display = 'none';
+    pauseMenu.innerHTML = `
+        <h1>Paused</h1>
+        <button id='resume'>Resume</button>
+        <button id='restart'>Restart</button>
+        <button id='settings'>Settings</button>
+    `;
+    document.body.appendChild(pauseMenu);
+
+    document.getElementById('resume').onclick = togglePauseMenu;
+    document.getElementById('restart').onclick = () => { /* Restart logic */ togglePauseMenu(); };
+    document.getElementById('settings').onclick = () => { /* Open settings logic */ togglePauseMenu(); };
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            togglePauseMenu();
+        }
+    });
+}
+
+export function togglePauseMenu() {
+    isPaused = !isPaused;
+    const pauseMenu = document.getElementById('pauseMenu');
+    if (isPaused) {
+        pauseMenu.style.display = 'block';
+        // Pause animations and sounds here
+    } else {
+        pauseMenu.style.display = 'none';
+        // Resume animations and sounds here
+    }
 }
